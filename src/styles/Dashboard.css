@@ -1,0 +1,160 @@
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Color Palette Variables */
+:root {
+  --color-primary: #F4991A;
+  --color-secondary: #F2EAD3;
+  --color-light: #F9F5F0;
+  --color-dark: #344F1F;
+}
+
+.dashboard {
+  display: flex;
+  height: 100%;
+  width: 100%; /* Important for the flex container to have a width */
+  font-family: Arial, sans-serif;
+  color: var(--color-dark);
+}
+
+.sidebar {
+  width: 300px;
+  padding: 20px;
+  background-color: var(--color-secondary);
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  border-right: 4px solid var(--color-primary);
+}
+
+.sidebar h2 {
+  color: var(--color-dark);
+  border-bottom: 2px solid var(--color-dark);
+  padding-bottom: 10px;
+}
+
+.stats-container, .department-stats-container {
+  margin-top: 15px;
+}
+
+.stat-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(52, 79, 31, 0.2);
+}
+
+.stat-item span {
+  font-weight: bold;
+}
+
+.map-container {
+  flex: 1;
+  height: 100%;
+}
+
+/* Custom Popup Styles */
+.leaflet-popup-content-wrapper {
+  background: var(--color-light);
+  color: var(--color-dark);
+  border-radius: 8px;
+}
+
+.leaflet-popup-content {
+  margin: 10px;
+}
+
+.custom-popup h4 {
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.status-pending {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.status-solved {
+  color: var(--color-dark);
+  font-weight: bold;
+}
+
+.filter-btn {
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.filter-btn:hover {
+  background-color: rgba(52, 79, 31, 0.1);
+}
+
+.filter-btn.active {
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: bold;
+}
+
+.filter-btn.active span {
+  color: white;
+}
+
+
+.issue-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.status-update-buttons {
+  margin-top: 15px;
+  border-top: 1px solid var(--color-dark);
+  padding-top: 10px;
+}
+
+.status-update-buttons button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.status-update-buttons button:hover {
+  background-color: #d88416; /* A slightly darker shade */
+}
+
+/* Styling for the Location Filter section */
+.location-filter {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(52, 79, 31, 0.2);
+}
+
+.location-filter input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-dark);
+  border-radius: 5px;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  font-size: 14px;
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  transition: border-color 0.3s;
+}
+
+.location-filter input::placeholder {
+  color: rgba(52, 79, 31, 0.5);
+}
+
+.location-filter input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px rgba(244, 153, 26, 0.5);
+}

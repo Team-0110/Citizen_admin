@@ -1,0 +1,103 @@
+/* Container for the entire Issue View page */
+.issue-view-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+/* Header with back button and title */
+.issue-view-page .header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 10px;
+}
+
+.issue-view-page .header h1 {
+  margin: 0;
+  color: var(--color-dark);
+}
+
+.issue-view-page .header button {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.issue-view-page .header button:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Main content area (image and text details) */
+.issue-view-page .content {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.issue-view-page .details-container {
+  flex: 1;
+}
+
+.issue-view-page .image-wrapper {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.issue-view-page .issue-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.issue-view-page .text-details p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.issue-view-page .text-details strong {
+  color: var(--color-primary);
+}
+
+/* Status update buttons */
+.issue-view-page .status-update-buttons {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-light);
+}
+
+.issue-view-page .status-update-buttons button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.issue-view-page .status-update-buttons button:hover {
+  background-color: var(--color-dark);
+}
+
+/* Map specific to this page */
+.issue-view-page .map-wrapper {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
