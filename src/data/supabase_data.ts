@@ -29,16 +29,19 @@ export const fetchIssues = async (): Promise<Issue[]> => {
     console.log("Fetched posts:", posts);
 
     // Filter out any posts with null location data
+    // This variable is now used below, resolving the warning.
     const validPosts = posts.filter(post => post.latitude !== null && post.longitude !== null);
 
     // Transform the data to match the Issue interface
-    const transformedIssues: Issue[] = posts.map((post: any) => ({
+    // CORRECTION: Used 'validPosts' instead of 'posts' to resolve the unused variable warning.
+    const transformedIssues: Issue[] = validPosts.map((post: any) => ({
       id: post.id,
-      title: post.topic, // You may need a 'title' column in your DB
+      title: post.topic, // Assuming 'topic' is the column for the title
       description: post.content,
       status: post.status,
       department: post.department,
-      location: { lat: post.latitude, lng: post.longitude },
+      // The filter above ensures latitude and longitude are not null
+      location: { lat: post.latitude!, lng: post.longitude! }, 
       upvotes: post.likes.length, // Count the number of likes
       image: post.image_url,
       reportedDate: post.created_at,
