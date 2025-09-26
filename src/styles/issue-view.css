@@ -101,3 +101,10 @@
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Add this class to your issue-view.css file */
+.status-update-buttons .status-active {
+  background-color: #4CAF50; /* A green color */
+  color: white;
+  border: 1px solid #4CAF50;
+}

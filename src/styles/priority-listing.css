@@ -1,0 +1,118 @@
+
+.priority-listing-page {
+  background-color: var(--color-light); /* Light background */
+  color: var(--color-dark); /* Dark text */
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.priority-listing-page .header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.priority-listing-page .header h1 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.priority-listing-page .header button {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.priority-listing-page .header button:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: var(--color-secondary);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.filters label {
+  font-weight: bold;
+}
+
+.filters select,
+.filters input {
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--color-dark);
+  background-color: white;
+  color: var(--color-dark);
+}
+
+.filters select:focus,
+.filters input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 3px rgba(244, 153, 26, 0.5);
+}
+
+.issues-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.issue-item {
+  background-color: white;
+  border-left: 5px solid var(--color-primary);
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.issue-item h3 {
+  margin-top: 0;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.issue-item p {
+  margin: 5px 0;
+}
+
+.issue-item p strong {
+  color: var(--color-dark);
+}
+
+/* Add these styles to your priority-listing.css file */
+.issue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Space between text and image */
+}
+
+.issue-details {
+  flex-grow: 1;
+}
+
+.issue-card-image {
+  width: 150px; /* Or any size you prefer */
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}

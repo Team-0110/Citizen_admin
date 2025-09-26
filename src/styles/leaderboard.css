@@ -1,0 +1,82 @@
+
+
+/* Updated Leaderboard Styles */
+
+.leaderboard-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--color-light); /* Using a light background color */
+  min-height: 100vh;
+}
+
+.leaderboard-header {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.leaderboard-header h1 {
+  font-size: 2.5em;
+  color: var(--color-dark); /* Using a dark color for the main heading */
+  margin: 0;
+}
+
+.leaderboard-header p {
+  color: #666; /* This color isn't in your palette, so we'll keep it as a default grey */
+  margin-top: 5px;
+}
+
+.leaderboard-header button {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  background-color: var(--color-primary); /* Using the primary color for the button */
+  color: var(--color-light); /* Using a light color for button text */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.leaderboard-header button:hover {
+  background-color: #d17a14; /* A slightly darker shade of the primary color for the hover effect */
+}
+
+.leaderboard-table-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--color-light); /* Using the light color for the container */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th, .leaderboard-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.leaderboard-table th {
+  background-color: var(--color-secondary); /* Using the secondary color for table headers */
+  color: var(--color-dark); /* Using the dark color for header text */
+  font-weight: bold;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #f1f1f1; /* Keeping this a neutral grey for the hover effect */
+}
+
+.leaderboard-table tbody tr:last-child td {
+  border-bottom: none;
+}

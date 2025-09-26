@@ -4,7 +4,7 @@ import L from 'leaflet';
 import '../styles/issue-view.css';
 
 // Define the Issue and prop types for this component
-interface Issue {
+export interface Issue {
   id: number;
   title: string;
   description: string;
@@ -14,6 +14,8 @@ interface Issue {
   upvotes: number;
   image: string;
   icon?: L.Icon;
+  reportedDate: string; // Updated
+  resolvedDate?: string; // Updated
 }
 
 interface IssueViewPageProps {
@@ -35,7 +37,7 @@ const IssueViewPage: React.FC<IssueViewPageProps> = ({ issue, onUpdateStatus, on
     return null;
   }
 
-  const { title, description, department, status, upvotes, image, location, icon } = issue;
+  const { title, description, department, status, upvotes, image, location, icon, reportedDate } = issue;
 
   return (
     <div className="issue-view-page">
@@ -53,14 +55,31 @@ const IssueViewPage: React.FC<IssueViewPageProps> = ({ issue, onUpdateStatus, on
             <p><strong>Department:</strong> {department}</p>
             <p><strong>Current Status:</strong> <span className={`status-${status}`}>{status}</span></p>
             <p><strong>Upvotes:</strong> {upvotes}</p>
+            <p><strong>Reported Date:</strong> {new Date(reportedDate).toLocaleString()}</p>
+            {issue.resolvedDate && <p><strong>Resolved Date:</strong> {new Date(issue.resolvedDate).toLocaleString()}</p>}
           </div>
         </div>
         
         <div className="status-update-buttons">
           <h3>Update Status:</h3>
-          <button onClick={() => onUpdateStatus(issue.id, 'acknowledged')}>Acknowledged</button>
-          <button onClick={() => onUpdateStatus(issue.id, 'in-progress')}>In Progress</button>
-          <button onClick={() => onUpdateStatus(issue.id, 'solved')}>Solved</button>
+          <button 
+            onClick={() => onUpdateStatus(issue.id, 'Acknowledged')} 
+            className={status === 'Acknowledged' ? 'status-active' : ''}
+          >
+            Acknowledged
+          </button>
+          <button 
+            onClick={() => onUpdateStatus(issue.id, 'Work in Progress')} 
+            className={status === 'Work in Progress' ? 'status-active' : ''}
+          >
+            Work in Progress
+          </button>
+          <button 
+            onClick={() => onUpdateStatus(issue.id, 'Completed')} // Corrected value
+            className={status === 'Completed' ? 'status-active' : ''} // Corrected value
+          >
+            Resolved
+          </button>
         </div>
       </div>
 
