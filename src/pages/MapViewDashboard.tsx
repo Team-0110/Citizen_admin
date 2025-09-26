@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
-// @ts-ignore
-import 'leaflet.heat'; 
-import "../../styles/dashboard.css";
+import 'leaflet.heat';
+import '../styles/dashboard.css';
 import type { Issue } from '../data/issues.ts';
 import IssueViewPage from "./IssueViewPage";
 import { supabase } from '../supabaseClient';
@@ -14,7 +13,7 @@ import { fetchIssues } from '../data/supabase_data';
 export const createColoredIcon = (department: string): L.Icon => {
   let color;
   switch (department) {
-    case 'Roads': // RESOLVED: Keeping the correct 'Roads' case
+    case 'Roads': // Typo fixed from 'Road' for consistency
       color = 'red';
       break;
     case 'Electricity':
@@ -38,27 +37,17 @@ export const createColoredIcon = (department: string): L.Icon => {
   });
 };
 
-// This is required to fix an issue with leaflet's default icons
-(L.Icon.Default.prototype as any)._getIconUrl = () => {
-    // A simple URL to a blank image to satisfy the type system
-    // The actual icons are provided via createColoredIcon
-    return 'data:image/svg+xml;charset=utf-8,<svg></svg>';
-};
-
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 
 const HeatmapLayerComponent: React.FC<{ points: [number, number, number][] }> = ({ points }) => {
   const map = useMap();
 
   useEffect(() => {
-    // Check if the heatLayer function exists on L
     if (!(L as any).heatLayer) {
       console.error('Leaflet.heat plugin is not loaded.');
       return;
     }
-    
-    // Type assertion is often necessary when using third-party Leaflet plugins
     const heat = (L as any).heatLayer(points, { radius: 25 }).addTo(map);
-    
     return () => {
       map.removeLayer(heat);
     };
@@ -167,9 +156,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
   };
 
   const handleIssueClick = (issue: Issue) => {
-    if (issue.location) {
-        setMapCenter([issue.location.lat, issue.location.lng]);
-    }
+    setMapCenter([issue.location.lat, issue.location.lng]);
     const icon = createColoredIcon(issue.department);
     setSelectedIssue({ ...issue, icon });
   };
@@ -185,16 +172,13 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
     : issues.filter(issue => issue.department === activeFilter && issue.status !== "Completed");
 
   const fetchCityCoordinates = async (cityName: string) => {
-    // It's generally unsafe to expose API keys like this. Use environment variables if possible.
     const apiKey = 'pk.df85a0b6ad67fab1e8535cd30fc409fc';
     
     try {
-      // CORRECTED: Added backticks (`) for template literals
       const response = await fetch(`https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json`);
       const data = await response.json();
       
       if (data && data.length > 0) {
-        // locationiq returns lat/lon as strings, so we parse them
         const { lat, lon } = data[0];
         setMapCenter([parseFloat(lat), parseFloat(lon)]);
       } else {
@@ -206,22 +190,20 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
       setMapCenter([12.7562, 80.1983]);
     }
   };
-    
+  
   const handleLocationSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const locationName = event.target.value.trim();
     if (locationName) {
-      // Introduce a slight delay (debounce) in a real app to limit API calls
       fetchCityCoordinates(locationName);
     }
   };
-    
+  
   const heatmapData = filteredIssues
-    // Check for issue.location and its properties
     .filter(issue => issue.location?.lat !== null && issue.location?.lng !== null)
     .map(issue => [
-        issue.location!.lat, // Non-null assertion is safe due to the filter above
-        issue.location!.lng, // Non-null assertion is safe due to the filter above
-        issue.upvotes + 1, // Intensity based on upvotes
+        issue.location.lat,
+        issue.location.lng,
+        issue.upvotes + 1,
     ]);
 
   if (selectedIssue) {
@@ -233,7 +215,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
       />
     );
   }
-    
+  
   if (loading) {
     return <div>Loading issues...</div>;
   }
@@ -291,25 +273,23 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
           {showHeatmap ? (
             <HeatmapLayerComponent points={heatmapData as [number, number, number][]} />
           ) : (
-            filteredIssues
-              .filter(issue => issue.location) // Ensure location exists for marker
-              .map((issue) => (
-                <Marker
-                  key={issue.id}
-                  position={[issue.location!.lat, issue.location!.lng]} 
-                  icon={createColoredIcon(issue.department)}
-                  eventHandlers={{ click: () => handleIssueClick(issue) }}
-                >
-                  <Popup>
-                    <div className="custom-popup">
-                      <img src={issue.image} alt={issue.title} className="issue-image" />
-                      <h4>{issue.title}</h4>
-                      <p><strong>Department:</strong> {issue.department}</p>
-                      <p><strong>Status:</strong> {issue.status}</p>
-                    </div>
-                  </Popup>
-                </Marker>
-              ))
+            filteredIssues.map((issue) => (
+              <Marker
+                key={issue.id}
+                position={[issue.location.lat, issue.location.lng]}
+                icon={createColoredIcon(issue.department)}
+                eventHandlers={{ click: () => handleIssueClick(issue) }}
+              >
+                <Popup>
+                  <div className="custom-popup">
+                    <img src={issue.image} alt={issue.title} className="issue-image" />
+                    <h4>{issue.title}</h4>
+                    <p><strong>Department:</strong> {issue.department}</p>
+                    <p><strong>Status:</strong> {issue.status}</p>
+                  </div>
+                </Popup>
+              </Marker>
+            ))
           )}
         </MapContainer>
       </div>
