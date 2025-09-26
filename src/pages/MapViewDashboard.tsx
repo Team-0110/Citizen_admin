@@ -11,9 +11,9 @@ import { fetchIssues } from '../data/supabase_data';
 
 // Helper function to create colored icons
 export const createColoredIcon = (department: string): L.Icon => {
-  let color = 'blue';
+  let color;
   switch (department) {
-    case 'Road':
+    case 'Roads': // Typo fixed from 'Road' for consistency
       color = 'red';
       break;
     case 'Electricity':
@@ -27,9 +27,9 @@ export const createColoredIcon = (department: string): L.Icon => {
       break;
   }
   return L.icon({
-    iconRetinaUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    shadowUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png`,
+    iconRetinaUrl: https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png,
+    iconUrl: https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png,
+    shadowUrl: https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png,
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -75,7 +75,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
   const [departmentStats, setDepartmentStats] = useState<Record<string, number>>({});
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
-  // Set initial coordinates for South India
+  // Initial coordinates set for Thiruporur
   const [mapCenter, setMapCenter] = useState<[number, number]>([12.7562, 80.1983]);
   const [showHeatmap, setShowHeatmap] = useState<boolean>(true);
   const [loading, setLoading] = useState(true);
@@ -120,7 +120,8 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
     }
 
     try {
-      const { data, error } = await supabase
+      // Renamed 'data' to '_data' to suppress ts(6133) error
+      const { data: _data, error } = await supabase
         .from('posts')
         .update(updateObject)
         .eq('id', id);
@@ -174,7 +175,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
     const apiKey = 'pk.df85a0b6ad67fab1e8535cd30fc409fc';
     
     try {
-      const response = await fetch(`https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json`);
+      const response = await fetch(https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json);
       const data = await response.json();
       
       if (data && data.length > 0) {
@@ -182,11 +183,11 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
         setMapCenter([parseFloat(lat), parseFloat(lon)]);
       } else {
         console.error("No location found for:", cityName);
-        setMapCenter([14.0, 77.0]);
+        setMapCenter([12.7562, 80.1983]);
       }
     } catch (error) {
       console.error("Error fetching location:", error);
-      setMapCenter([14.0, 77.0]);
+      setMapCenter([12.7562, 80.1983]);
     }
   };
   
@@ -239,20 +240,22 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
         </div>
         <div className="department-stats-container">
           <h3>Filter by Department</h3>
-          <div
-            className={`stat-item filter-btn ${activeFilter === 'All' ? 'active' : ''}`}
+          {/* Changed div to button for accessibility and linting compliance */}
+          <button
+            className={stat-item filter-btn ${activeFilter === 'All' ? 'active' : ''}}
             onClick={() => setActiveFilter("All")}
           >
             All: <span>{totalIssuesReported - solvedIssues}</span>
-          </div>
+          </button>
           {Object.entries(departmentStats).map(([department, count]) => (
-            <div
+            // Changed div to button for accessibility and linting compliance
+            <button
               key={department}
-              className={`stat-item filter-btn ${activeFilter === department ? 'active' : ''}`}
+              className={stat-item filter-btn ${activeFilter === department ? 'active' : ''}}
               onClick={() => setActiveFilter(department)}
             >
               {department}: <span>{count}</span>
-            </div>
+            </button>
           ))}
         </div>
         <div className="location-filter">
@@ -261,7 +264,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
         </div>
       </div>
       <div className="map-container">
-        <MapContainer center={mapCenter} zoom={50} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={mapCenter} zoom={13} style={{ height: "100%", width: "100%" }}>
           <MapUpdater center={mapCenter} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
