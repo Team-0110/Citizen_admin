@@ -14,7 +14,7 @@ import { fetchIssues } from '../data/supabase_data';
 export const createColoredIcon = (department: string): L.Icon => {
   let color;
   switch (department) {
-    case 'Roads':
+    case 'Roads': // RESOLVED: Keeping the correct 'Roads' case
       color = 'red';
       break;
     case 'Electricity':
@@ -28,10 +28,9 @@ export const createColoredIcon = (department: string): L.Icon => {
       break;
   }
   return L.icon({
-    // CORRECTED: Added backticks (`) for template literals
     iconRetinaUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
     iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    shadowUrl: `https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png`,
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -259,7 +258,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
         </div>
         <div className="department-stats-container">
           <h3>Filter by Department</h3>
-          {/* Changed div to button for accessibility */}
+          {/* Changed div to button for accessibility and linting compliance */}
           <button
             className={`stat-item filter-btn ${activeFilter === 'All' ? 'active' : ''}`}
             onClick={() => setActiveFilter("All")}
@@ -267,7 +266,7 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
             All: <span>{totalIssuesReported - solvedIssues}</span>
           </button>
           {Object.entries(departmentStats).map(([department, count]) => (
-            // Changed div to button for accessibility
+            // Changed div to button for accessibility and linting compliance
             <button
               key={department}
               className={`stat-item filter-btn ${activeFilter === department ? 'active' : ''}`}
@@ -297,7 +296,6 @@ const MapViewDashboard: React.FC<MapViewDashboardProps> = ({ onNavigate }) => {
               .map((issue) => (
                 <Marker
                   key={issue.id}
-                  // Non-null assertion is used here for TypeScript safety
                   position={[issue.location!.lat, issue.location!.lng]} 
                   icon={createColoredIcon(issue.department)}
                   eventHandlers={{ click: () => handleIssueClick(issue) }}
