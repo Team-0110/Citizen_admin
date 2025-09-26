@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
-import '../styles/dashboard.css';
+import '../styles/Dashboard.css';
 import type { Issue } from '../data/issues.ts';
 import IssueViewPage from "./IssueViewPage";
 import { supabase } from '../supabaseClient';
