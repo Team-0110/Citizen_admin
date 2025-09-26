@@ -4,7 +4,7 @@ import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 // @ts-ignore
 import 'leaflet.heat'; 
-import '../styles/dashboard.css';
+import "../../styles/dashboard.css";
 import type { Issue } from '../data/issues.ts';
 import IssueViewPage from "./IssueViewPage";
 import { supabase } from '../supabaseClient';
